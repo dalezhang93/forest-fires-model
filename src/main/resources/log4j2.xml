@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <Property name="baseDir">logs</Property>
+        <Property name="appender">true</Property>
+        <Property name="fileSaveAge">30d</Property>
+        <property name="logFormat">[%p] %-d{yyyy-MM-dd HH:mm:ss} %l %n%m%n%n</property>
+    </properties>
+    <Appenders>
+        <RollingRandomAccessFile name="logFile" append="${appender}">
+            <FileName>${baseDir}/applog.log</FileName>
+            <FilePattern>${baseDir}/applog-%d{yyyy-MM-dd}.log</FilePattern>
+            <PatternLayout>
+                <Pattern>${logFormat}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${baseDir}">
+                    <IfFileName glob="applog-*.log" />
+                    <IfLastModified age="${fileSaveAge}" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="logFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

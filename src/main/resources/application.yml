@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/fires?requireSSL=false&connectionTimeout=2000&serverTimezone=Asia/Shanghai
+    username:
+    password:
+    hikari:
+      maximumPoolSize: 3
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    variables:
+      log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl

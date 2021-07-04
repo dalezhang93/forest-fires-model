@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.example.forestfires.dao.mapper.TreesMapper">
+       <select id="alltrees" resultType="com.example.forestfires.domain.po.TreesPO">
+         select theeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
+         crownarea,crownvolume,previousid,tree_location_nz
+         from trees
+       </select>
+
+      <select id="peekPoint"  resultType="hashmap">
+        select (min(tree_location_x)+
+               max(tree_location_x))/2 as tree_location_x,
+               (min(tree_location_y)+
+                max(tree_location_y))/2 as tree_location_y
+        from trees
+      </select>
+    </mapper>
+
