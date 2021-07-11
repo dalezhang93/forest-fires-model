@@ -18,4 +18,5 @@ public class TreesPO {
     private Integer previousid ;
     private Integer treeLocationNz ;
     private Double auxiliaryDistance ;
+    private Integer status;
 }

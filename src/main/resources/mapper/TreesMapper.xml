@@ -5,11 +5,11 @@
     <mapper namespace="com.example.forestfires.dao.mapper.TreesMapper">
        <select id="alltrees" resultType="com.example.forestfires.domain.po.TreesPO">
          select theeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
-         crownarea,crownvolume,previousid,tree_location_nz
+         crownarea,crownvolume,previousid,tree_location_nz,status
          from trees
        </select>
 
-      <select id="peekPoint"  resultType="hashmap">
+      <select id="peekPoint" resultType="hashmap">
         select (min(tree_location_x)+
                max(tree_location_x))/2 as tree_location_x,
                (min(tree_location_y)+
