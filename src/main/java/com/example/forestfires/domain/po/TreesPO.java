@@ -1,5 +1,6 @@
 package com.example.forestfires.domain.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -16,7 +17,8 @@ public class TreesPO {
     private Double crownarea ;
     private Integer crownvolume ;
     private Integer previousid ;
-    private Integer treeLocationNz ;
+    private Integer treeLocationNz;
+    @JsonIgnore
     private Double auxiliaryDistance ;
     private Integer status;
 }
