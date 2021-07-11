@@ -1,9 +1,12 @@
 package com.example.forestfires.controller;
 
+import com.example.forestfires.domain.JsonResult;
 import com.example.forestfires.domain.po.TreesPO;
 import com.example.forestfires.service.FiresService;
 import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +23,10 @@ public class FiresRestful {
     private FiresService firesService;
 
     @GetMapping("allfires")
-    public List<TreesPO> queryAllfires(){
-        return firesService.listAllFires();
+    public ResponseEntity<JsonResult> queryAllfires(){
+        List<TreesPO> treesPOList = firesService.listAllFires();
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(treesPOList);
+        return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 
     @GetMapping("init")
