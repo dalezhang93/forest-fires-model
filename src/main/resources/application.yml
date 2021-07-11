@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   profiles:
     active: dev
@@ -13,3 +16,5 @@ mybatis:
   configuration:
     variables:
       log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+      # 下划线转驼峰
+      map-underscore-to-camel-case: true

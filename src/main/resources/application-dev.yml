@@ -1,11 +1,8 @@
-server:
-  port: 8080
-
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/fires?requireSSL=false&connectionTimeout=2000&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://cdb-354ib97z.gz.tencentcdb.com:10079/fires?requireSSL=false&connectionTimeout=2000&serverTimezone=Asia/Shanghai
     username: root
-    password: db2sapdb
+    password: db2sapdb@)@!
     hikari:
       maximumPoolSize: 3
 
@@ -13,5 +10,4 @@ mybatis:
   configuration:
     variables:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    # 下划线转驼峰
-    map-underscore-to-camel-case: true
+
