@@ -14,7 +14,6 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
-    variables:
-      log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
       # 下划线转驼峰
     map-underscore-to-camel-case: true

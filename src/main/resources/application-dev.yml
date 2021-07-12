@@ -8,6 +8,5 @@ spring:
 
 mybatis:
   configuration:
-    variables:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
