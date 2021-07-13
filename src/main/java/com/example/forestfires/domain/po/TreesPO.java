@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class TreesPO {
-    private Integer theeid ;
+    private Integer treeid ;
     private Double treeLocationX ;
     private Double treeLocationY ;
     private Integer treeheight ;
