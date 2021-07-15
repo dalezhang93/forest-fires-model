@@ -1,0 +1,20 @@
+package com.example.forestfires.domain.po;
+
+import lombok.Data;
+import lombok.NonNull;
+
+/**
+ * @author zhangduo
+ * @date: 2021/7/12 22:07
+ */
+@Data
+public class TreesDistPO {
+
+    @NonNull
+    private Integer treeSourceID;
+    @NonNull
+    private Integer trreTargetID;
+    @NonNull
+    private Double  Distinct;
+
+}
