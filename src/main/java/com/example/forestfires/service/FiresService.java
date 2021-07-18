@@ -71,7 +71,9 @@ public class FiresService {
                 // 如果相对距离小于树的最大直径
                 if (Math.abs(x.getAuxiliaryDistance() - y.getAuxiliaryDistance()) <= MAX_CROWNDIAMETER) {
                     // 如果海拔差大就不考虑
-                    if ((x.getTreeheight() + x.getTreeLocationNz()) < y.getTreeLocationNz()) {
+                    if ((x.getTreeheight() + x.getTreeLocationNz()) < y.getTreeLocationNz()
+                        || y.getTreeLocationNz() + y.getTreeheight() < x.getTreeLocationNz()
+                    ) {
                         continue;
                     }
                     double realDistince = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
