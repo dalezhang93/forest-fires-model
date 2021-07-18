@@ -77,7 +77,13 @@ public class FiresService {
                     double realDistince = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
                     // 如果实际距离小于两树的树冠距离
                     if (realDistince < (x.getCrowndiameter()/2 + y.getCrowndiameter()/2 * fireRadiusMultiple)) {
-                        treesDistPOList.add(new TreesDistPO(x.getTreeid(), y.getTreeid(), realDistince));
+                        treesDistPOList.add(
+                            TreesDistPO.of(
+                                x.getTreeid(),
+                                y.getTreeid(),
+                                realDistince,
+                                (y.getTreeLocationNz() - x.getTreeLocationNz())/realDistince)
+                        );
                         if (treesDistPOList.size() == BATCH_INSERT_SIZE) {
                             batchInsert(treesDistPOList);
                         }
