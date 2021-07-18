@@ -13,8 +13,10 @@
         select (min(tree_location_x)+
                max(tree_location_x))/2 as tree_location_x,
                (min(tree_location_y)+
-                max(tree_location_y))/2 as tree_location_y
+                max(tree_location_y))/2 as tree_location_y,
+               max(crowndiameter) max_crowndiameter
         from trees
       </select>
+
     </mapper>
 

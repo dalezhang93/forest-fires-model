@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.example.forestfires.dao.mapper.NearbyTreesMapper">
+      <insert id="batchInsertNearbyTrees">
+        insert into nearbytrees(treeid,nearbytreeid,distance) values
+        (#{tree.treeID}, #{tree.nearbyTreeID},#{tree.distince})
+      </insert>
+
+      <delete id="cleanNearbyTreesTable">
+        delete from nearbytrees
+      </delete>
+    </mapper>

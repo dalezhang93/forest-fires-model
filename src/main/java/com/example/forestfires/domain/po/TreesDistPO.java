@@ -11,10 +11,10 @@ import lombok.NonNull;
 public class TreesDistPO {
 
     @NonNull
-    private Integer treeSourceID;
+    private Integer treeID;
     @NonNull
-    private Integer trreTargetID;
+    private Integer nearbyTreeID;
     @NonNull
-    private Double  Distinct;
+    private Double distince;
 
 }

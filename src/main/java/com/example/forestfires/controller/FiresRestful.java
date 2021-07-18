@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -34,7 +35,7 @@ public class FiresRestful {
 
     @PostMapping("init")
     @ApiOperation("初始化")
-    public void init() {
-        firesService.init();
+    public void init(@RequestParam(value = "fireRadiusMultiple", defaultValue = "1.5") Double fireRadiusMultiple) {
+        firesService.init(fireRadiusMultiple);
     }
 }
