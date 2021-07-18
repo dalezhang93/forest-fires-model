@@ -27,9 +27,9 @@ public class FiresRestful {
 
     @GetMapping("allfires")
     @ApiOperation("所有的树节点")
-    public ResponseEntity<JsonResult> queryAllfires(){
-        List<TreesPO> treesPOList = firesService.listAllFires();
-        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(treesPOList);
+    public ResponseEntity<JsonResult<?>> queryAllfires(){
+        List<TreesPO> treeList = firesService.listAllFires();
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(treeList);
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 
