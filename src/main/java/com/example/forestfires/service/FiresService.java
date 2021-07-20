@@ -97,6 +97,9 @@ public class FiresService {
                 }
             }
         }
+        if (!treesDistPOList.isEmpty()) {
+            batchInsert(treesDistPOList);
+        }
     }
 
 
