@@ -84,7 +84,8 @@ public class FiresService {
                                 x.getTreeid(),
                                 y.getTreeid(),
                                 realDistince,
-                                (y.getTreeLocationNz() - x.getTreeLocationNz())/realDistince)
+                                (y.getTreeLocationNz() - x.getTreeLocationNz())/realDistince,
+                                DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()))
                         );
                         if (treesDistPOList.size() == BATCH_INSERT_SIZE) {
                             batchInsert(treesDistPOList);

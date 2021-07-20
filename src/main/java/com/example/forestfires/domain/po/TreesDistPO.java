@@ -16,5 +16,7 @@ public class TreesDistPO {
     private Double distince;
     // 坡度
     private Double slope;
+    // 角度
+    private Double angle;
 
 }
