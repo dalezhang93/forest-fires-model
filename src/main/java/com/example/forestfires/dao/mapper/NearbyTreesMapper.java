@@ -1,6 +1,6 @@
 package com.example.forestfires.dao.mapper;
 
-import com.example.forestfires.domain.po.TreesDistPO;
+import com.example.forestfires.domain.po.NearByTreesPO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -11,9 +11,9 @@ public interface NearbyTreesMapper {
 
     /**
      * 批量插入数据库
-     * @param TreesDistPO
+     * @param trees
      */
-    void batchInsertNearbyTrees(@Param("tree") TreesDistPO trees);
+    void batchInsertNearbyTrees(@Param("tree") NearByTreesPO trees);
 
     /**
      * 清空表

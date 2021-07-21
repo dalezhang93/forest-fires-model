@@ -3,7 +3,7 @@ package com.example.forestfires.service;
 import com.example.forestfires.algorithm.DistanceCal;
 import com.example.forestfires.dao.mapper.NearbyTreesMapper;
 import com.example.forestfires.dao.mapper.TreesMapper;
-import com.example.forestfires.domain.po.TreesDistPO;
+import com.example.forestfires.domain.po.NearByTreesPO;
 import com.example.forestfires.domain.po.TreesPO;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -60,7 +60,7 @@ public class FiresService {
 
         nearbyTreesMapper.cleanNearbyTreesTable();
 
-        List<TreesDistPO> treesDistPOList = new ArrayList<>();
+        List<NearByTreesPO> nearByTreesPOList = new ArrayList<>();
         for (int i = 0; i < treesList.size(); i++) {
             for (int j = 0; j < treesList.size(); j++) {
                 // 自己和自己不用比较
@@ -79,16 +79,16 @@ public class FiresService {
                     double realDistince = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
                     // 如果实际距离小于两树的树冠距离
                     if (realDistince < (x.getCrowndiameter()/2 + y.getCrowndiameter()/2 * fireRadiusMultiple)) {
-                        treesDistPOList.add(
-                            TreesDistPO.of(
+                        nearByTreesPOList.add(
+                            NearByTreesPO.of(
                                 x.getTreeid(),
                                 y.getTreeid(),
                                 realDistince,
                                 (y.getTreeLocationNz() - x.getTreeLocationNz())/realDistince,
                                 DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()))
                         );
-                        if (treesDistPOList.size() == BATCH_INSERT_SIZE) {
-                            batchInsert(treesDistPOList);
+                        if (nearByTreesPOList.size() == BATCH_INSERT_SIZE) {
+                            batchinsertNearbyTrees(nearByTreesPOList);
                         }
                     }
                     // 因为已排序,后面越来越远就不用算了
@@ -97,24 +97,24 @@ public class FiresService {
                 }
             }
         }
-        if (!treesDistPOList.isEmpty()) {
-            batchInsert(treesDistPOList);
+        if (!nearByTreesPOList.isEmpty()) {
+            batchinsertNearbyTrees(nearByTreesPOList);
         }
     }
 
 
     /**
      * 批量插入数据库
-     * @param treesDistPOList
+     * @param nearByTreesPOList
      */
-    private void batchInsert(List<TreesDistPO> treesDistPOList) {
+    private void batchinsertNearbyTrees(List<NearByTreesPO> nearByTreesPOList) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false)){
             NearbyTreesMapper mapper = sqlSession.getMapper(NearbyTreesMapper.class);
-            for (TreesDistPO treesDistPO : treesDistPOList) {
-                mapper.batchInsertNearbyTrees(treesDistPO);
+            for (NearByTreesPO nearByTreesPO : nearByTreesPOList) {
+                mapper.batchInsertNearbyTrees(nearByTreesPO);
             }
             sqlSession.commit();
-            treesDistPOList.clear();
+            nearByTreesPOList.clear();
         }
     }
 }

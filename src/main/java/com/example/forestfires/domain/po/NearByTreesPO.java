@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor(staticName = "of")
-public class TreesDistPO {
+public class NearByTreesPO {
 
     private Integer treeID;
     private Integer nearbyTreeID;
