@@ -3,6 +3,7 @@ package com.example.forestfires.dao.mapper;
 import com.example.forestfires.domain.po.TreesPO;
 import java.util.List;
 import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author zhangduo
@@ -21,5 +22,12 @@ public interface TreesMapper {
      * @return
      */
     Map<String, Object> peekPoint();
+
+    /**
+     * 更新 trees 表的状态
+     * @param status
+     * @param treeid
+     */
+    void updateTreeStatus(@Param("status") int status, @Param("treeid") int treeid);
 
 }

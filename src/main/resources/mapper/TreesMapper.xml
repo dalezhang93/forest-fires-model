@@ -18,5 +18,9 @@
         from trees
       </select>
 
+      <update id="updateTreeStatus">
+        update trees set status = #{status},start_fire_time = now() where treeid=#{treeid}
+      </update>
+
     </mapper>
 

@@ -11,12 +11,13 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class NearByTreesPO {
 
-    private Integer treeID;
-    private Integer nearbyTreeID;
+    private Integer treeid;
+    private Integer nearbytreeid;
     private Double distince;
     // 坡度
     private Double slope;
     // 角度
     private Double angle;
+    private Integer nearbytree_status;
 
 }

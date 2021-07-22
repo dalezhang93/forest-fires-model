@@ -38,4 +38,16 @@ public class FiresRestful {
     public void init(@RequestParam(value = "fireRadiusMultiple", defaultValue = "1.5") Double fireRadiusMultiple) {
         firesService.init(fireRadiusMultiple);
     }
+
+    @PostMapping("startfire")
+    @ApiOperation("开始起火")
+    public void startfire(@RequestParam("treeid") Integer treeid) {
+        firesService.startFire(treeid);
+    }
+
+    @PostMapping("next")
+    @ApiOperation("next")
+    public void next() {
+        firesService.next();
+    }
 }

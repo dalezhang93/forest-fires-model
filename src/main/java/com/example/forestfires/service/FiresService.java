@@ -3,17 +3,21 @@ package com.example.forestfires.service;
 import com.example.forestfires.algorithm.DistanceCal;
 import com.example.forestfires.dao.mapper.NearbyTreesMapper;
 import com.example.forestfires.dao.mapper.TreesMapper;
+import com.example.forestfires.domain.TreeStatusEnum;
 import com.example.forestfires.domain.po.NearByTreesPO;
 import com.example.forestfires.domain.po.TreesPO;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import javax.annotation.Resource;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author zhangduo
@@ -29,7 +33,7 @@ public class FiresService {
     @Resource
     public SqlSessionFactory sqlSessionFactory;
 
-    private int BATCH_INSERT_SIZE = 5000;
+    private int BATCH_SIZE = 5000;
 
     // 树的最大直径
     private Double MAX_CROWNDIAMETER;
@@ -85,9 +89,10 @@ public class FiresService {
                                 y.getTreeid(),
                                 realDistince,
                                 (y.getTreeLocationNz() - x.getTreeLocationNz())/realDistince,
-                                DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()))
+                                DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()),
+                                TreeStatusEnum.NOT_FIRE.getStatus())
                         );
-                        if (nearByTreesPOList.size() == BATCH_INSERT_SIZE) {
+                        if (nearByTreesPOList.size() == BATCH_SIZE) {
                             batchinsertNearbyTrees(nearByTreesPOList);
                         }
                     }
@@ -102,6 +107,54 @@ public class FiresService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void startFire(int startFireID) {
+        treesMapper.updateTreeStatus(TreeStatusEnum.FIRE.getStatus(), startFireID);
+        nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(),  startFireID);
+    }
+
+    public void next() {
+        List<NearByTreesPO> possibleFireTreeList = nearbyTreesMapper.possibleFireTrees();
+
+        Map<Integer, List<NearByTreesPO>> treeListMap = new HashMap<>();
+        for (NearByTreesPO nearByTreesPO : possibleFireTreeList) {
+            Integer treeid = nearByTreesPO.getTreeid();
+            treeListMap.computeIfAbsent(treeid, key -> new ArrayList<>());
+            treeListMap.get(treeid).add(nearByTreesPO);
+        }
+
+        List<Integer> fireTreeidList = new ArrayList<>();
+        for (Integer treeid : treeListMap.keySet()) {
+            if (calPossibleFireTree(treeid, treeListMap.get(treeid))) {
+                fireTreeidList.add(treeid);
+                if (fireTreeidList.size() == BATCH_SIZE) {
+                    batchUpdateTreeStatus(fireTreeidList);
+                }
+            }
+        }
+        if (!fireTreeidList.isEmpty()) {
+            batchUpdateTreeStatus(fireTreeidList);
+        }
+    }
+
+    private void batchUpdateTreeStatus(List<Integer> fireTreeidList) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false)) {
+            NearbyTreesMapper nearbyTreesMapper = sqlSession.getMapper(NearbyTreesMapper.class);
+            TreesMapper treesMapper = sqlSession.getMapper(TreesMapper.class);
+
+            for (Integer treeid : fireTreeidList) {
+                nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(), treeid);
+                treesMapper.updateTreeStatus(TreeStatusEnum.FIRE.getStatus(), treeid);
+            }
+            sqlSession.commit();
+            fireTreeidList.clear();
+        }
+    }
+
+    private boolean calPossibleFireTree(int treeid, List<NearByTreesPO> nearbyTreeList) {
+        Random random = new Random();
+        return random.nextBoolean();
+    }
 
     /**
      * 批量插入数据库

@@ -11,4 +11,18 @@
       <delete id="cleanNearbyTreesTable">
         delete from nearbytrees
       </delete>
+
+      <update id="updateNearbyTreeStatus">
+          update nearbytrees set nearbytree_status = #{status} where nearbytreeid=#{nearbytreeid}
+      </update>
+
+
+      <select id="possibleFireTrees">
+          select b.treeid,b.nearbytreeid,b.distance,b.angle,b.slope,b.nearbytree_status
+          from nearbytrees a inner join nearbytrees b
+          on a.treeid = b.treeid
+          inner join trees t on b.treeid = t.treeid
+          where a.nearbytree_status=1 and t.status=0
+          order by b.treeid,b.nearbytreeid
+      </select>
     </mapper>
