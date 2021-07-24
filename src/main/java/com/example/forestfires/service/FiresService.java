@@ -42,6 +42,7 @@ public class FiresService {
         return treesMapper.alltrees();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void init(Double fireRadiusMultiple) {
 
 
@@ -63,6 +64,7 @@ public class FiresService {
         treesList.sort(Comparator.comparing(TreesPO::getAuxiliaryDistance));
 
         nearbyTreesMapper.cleanNearbyTreesTable();
+        treesMapper.clearTreeStatus();
 
         List<NearByTreesPO> nearByTreesPOList = new ArrayList<>();
         for (int i = 0; i < treesList.size(); i++) {

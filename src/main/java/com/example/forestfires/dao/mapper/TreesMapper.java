@@ -30,4 +30,6 @@ public interface TreesMapper {
      */
     void updateTreeStatus(@Param("status") int status, @Param("treeid") int treeid);
 
+    void clearTreeStatus();
+
 }

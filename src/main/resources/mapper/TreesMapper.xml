@@ -22,5 +22,9 @@
         update trees set status = #{status},start_fire_time = now() where treeid=#{treeid}
       </update>
 
+      <update id="clearTreeStatus">
+        update trees set status = 0 and start_fire_time is null
+      </update>
+
     </mapper>
 
