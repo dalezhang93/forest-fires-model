@@ -45,7 +45,6 @@ public class FiresService {
     @Transactional(rollbackFor = Exception.class)
     public void init(Double fireRadiusMultiple) {
 
-
         List<TreesPO> treesList = treesMapper.alltrees();
 
         Map<String, Object> baseLcationMap = treesMapper.peekPoint();
@@ -115,7 +114,7 @@ public class FiresService {
         nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(),  startFireID);
     }
 
-    public void next() {
+    public List<Integer> nextFire() {
         List<NearByTreesPO> possibleFireTreeList = nearbyTreesMapper.possibleFireTrees();
 
         Map<Integer, List<NearByTreesPO>> treeListMap = new HashMap<>();
@@ -129,14 +128,12 @@ public class FiresService {
         for (Integer treeid : treeListMap.keySet()) {
             if (calPossibleFireTree(treeid, treeListMap.get(treeid))) {
                 fireTreeidList.add(treeid);
-                if (fireTreeidList.size() == BATCH_SIZE) {
-                    batchUpdateTreeStatus(fireTreeidList);
-                }
             }
         }
         if (!fireTreeidList.isEmpty()) {
             batchUpdateTreeStatus(fireTreeidList);
         }
+        return fireTreeidList;
     }
 
     private void batchUpdateTreeStatus(List<Integer> fireTreeidList) {
@@ -149,7 +146,6 @@ public class FiresService {
                 treesMapper.updateTreeStatus(TreeStatusEnum.FIRE.getStatus(), treeid);
             }
             sqlSession.commit();
-            fireTreeidList.clear();
         }
     }
 

@@ -47,9 +47,10 @@ public class FiresRestful {
         firesService.startFire(Integer.parseInt(params.get("treeid")));
     }
 
-    @PostMapping("next")
-    @ApiOperation("next")
-    public void next() {
-        firesService.next();
+    @PostMapping("nextFire")
+    @ApiOperation("nextFire")
+    public ResponseEntity<JsonResult<?>> nextFire() {
+        JsonResult<List<Integer>> jsonResult = new JsonResult<>(firesService.nextFire());
+        return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 }
