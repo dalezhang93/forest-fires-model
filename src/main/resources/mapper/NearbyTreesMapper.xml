@@ -5,7 +5,7 @@
     <mapper namespace="com.example.forestfires.dao.mapper.NearbyTreesMapper">
       <insert id="batchInsertNearbyTrees">
         insert into nearbytrees(treeid,nearbytreeid,distance,angle,slope) values
-        (#{tree.treeID}, #{tree.nearbyTreeID},#{tree.distince}, #{tree.angle}, #{tree.slope})
+        (#{tree.treeid}, #{tree.nearbytreeid},#{tree.distince}, #{tree.angle}, #{tree.slope})
       </insert>
 
       <delete id="cleanNearbyTreesTable">
@@ -16,8 +16,7 @@
           update nearbytrees set nearbytree_status = #{status} where nearbytreeid=#{nearbytreeid}
       </update>
 
-
-      <select id="possibleFireTrees">
+      <select id="possibleFireTrees" resultType="com.example.forestfires.domain.po.NearByTreesPO">
           select b.treeid,b.nearbytreeid,b.distance,b.angle,b.slope,b.nearbytree_status
           from nearbytrees a inner join nearbytrees b
           on a.treeid = b.treeid

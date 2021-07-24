@@ -5,13 +5,14 @@ import com.example.forestfires.domain.po.TreesPO;
 import com.example.forestfires.service.FiresService;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,14 +36,15 @@ public class FiresRestful {
 
     @PostMapping("init")
     @ApiOperation("初始化")
-    public void init(@RequestParam(value = "fireRadiusMultiple", defaultValue = "1.5") Double fireRadiusMultiple) {
+    public void init(@RequestBody Map<String,String> params) {
+        double fireRadiusMultiple = Double.parseDouble(params.getOrDefault("fireRadiusMultiple", "1.5"));
         firesService.init(fireRadiusMultiple);
     }
 
     @PostMapping("startfire")
     @ApiOperation("开始起火")
-    public void startfire(@RequestParam("treeid") Integer treeid) {
-        firesService.startFire(treeid);
+    public void startfire(@RequestBody Map<String,String> params) {
+        firesService.startFire(Integer.parseInt(params.get("treeid")));
     }
 
     @PostMapping("next")
