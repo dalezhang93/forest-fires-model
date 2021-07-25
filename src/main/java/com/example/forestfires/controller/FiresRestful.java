@@ -50,7 +50,7 @@ public class FiresRestful {
     @PostMapping("nextFire")
     @ApiOperation("nextFire")
     public ResponseEntity<JsonResult<?>> nextFire() {
-        JsonResult<List<Integer>> jsonResult = new JsonResult<>(firesService.nextFire());
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire());
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 }

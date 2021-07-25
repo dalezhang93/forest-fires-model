@@ -18,6 +18,12 @@ public interface TreesMapper {
     List<TreesPO> alltrees();
 
     /**
+     *
+     * @return
+     */
+    List<TreesPO> treesInfo(@Param("list") List<Integer> list);
+
+    /**
      * 选取其中一个点
      * @return
      */

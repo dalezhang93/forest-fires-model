@@ -114,7 +114,8 @@ public class FiresService {
         nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(),  startFireID);
     }
 
-    public List<Integer> nextFire() {
+    public List<TreesPO> nextFire() {
+        List<TreesPO> treesPOList = new ArrayList<>();
         List<NearByTreesPO> possibleFireTreeList = nearbyTreesMapper.possibleFireTrees();
 
         Map<Integer, List<NearByTreesPO>> treeListMap = new HashMap<>();
@@ -132,8 +133,9 @@ public class FiresService {
         }
         if (!fireTreeidList.isEmpty()) {
             batchUpdateTreeStatus(fireTreeidList);
+            treesPOList = treesMapper.treesInfo(fireTreeidList);
         }
-        return fireTreeidList;
+        return treesPOList;
     }
 
     private void batchUpdateTreeStatus(List<Integer> fireTreeidList) {
