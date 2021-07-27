@@ -17,12 +17,9 @@
       </update>
 
       <select id="possibleFireTrees" resultType="com.example.forestfires.domain.po.NearByTreesPO">
-          select b.treeid,b.nearbytreeid,b.distance,b.angle,b.slope,b.nearbytree_status
-          from nearbytrees a inner join nearbytrees b
-          on a.treeid = b.treeid
-          inner join trees t on b.treeid = t.treeid
-          where a.nearbytree_status=1 and t.status=0
-          order by b.treeid,b.nearbytreeid
+        select n.treeid, n.nearbytreeid, n.distance, n.angle, n.slope, n.nearbytree_status from trees t inner join nearbytrees n
+            on t.treeid = n.treeid
+            where t.status != 1 and nearbytree_status = 1
       </select>
 
     </mapper>
