@@ -178,4 +178,10 @@ public class FiresService {
             nearByTreesPOList.clear();
         }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void resetFireStatus() {
+        treesMapper.clearTreeStatus();
+        nearbyTreesMapper.resetNearbyTreesStatus();
+    }
 }

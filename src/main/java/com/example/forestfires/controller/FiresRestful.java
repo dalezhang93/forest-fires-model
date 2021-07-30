@@ -54,4 +54,10 @@ public class FiresRestful {
         JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(startFireHours));
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
+
+    @PostMapping("resetFire")
+    @ApiOperation("重置状态")
+    public void startfire() {
+        firesService.resetFireStatus();
+    }
 }

@@ -22,6 +22,11 @@ public interface NearbyTreesMapper {
     void cleanNearbyTreesTable();
 
     /**
+     * 重置nearbytree_status状态
+     */
+    void resetNearbyTreesStatus();
+
+    /**
      * 更新 nearbytrrs 表的树状态
      */
     void updateNearbyTreeStatus(@Param("status") int status, @Param("nearbytreeid") int nearbytreeid);
