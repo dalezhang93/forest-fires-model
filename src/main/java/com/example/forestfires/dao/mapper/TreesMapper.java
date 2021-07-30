@@ -38,4 +38,16 @@ public interface TreesMapper {
 
     void clearTreeStatus();
 
+    /**
+     * 将要灭火的树
+     * @param startFireHour
+     * @return
+     */
+    List<TreesPO> toBeUnfiredTrees(@Param("start_fire_hour") Integer startFireHour);
+
+    /**
+     * 更新要灭火的树的状态
+     */
+    void updateUnfiredTreesStatus();
+
 }

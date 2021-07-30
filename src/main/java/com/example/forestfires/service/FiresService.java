@@ -114,7 +114,7 @@ public class FiresService {
         nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(),  startFireID);
     }
 
-    public List<TreesPO> nextFire() {
+    public List<TreesPO> nextFire(int startFireHours) {
         List<TreesPO> treesPOList = new ArrayList<>();
         List<NearByTreesPO> possibleFireTreeList = nearbyTreesMapper.possibleFireTrees();
 
@@ -135,6 +135,14 @@ public class FiresService {
             batchUpdateTreeStatus(fireTreeidList);
             treesPOList = treesMapper.treesInfo(fireTreeidList);
         }
+
+        // 灭火的树列表
+        List<TreesPO> unfiredTrees = treesMapper.toBeUnfiredTrees(1);
+        if (!unfiredTrees.isEmpty()) {
+            treesPOList.addAll(unfiredTrees);
+            treesMapper.updateUnfiredTreesStatus();
+        }
+
         return treesPOList;
     }
 

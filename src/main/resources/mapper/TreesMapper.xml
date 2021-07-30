@@ -21,6 +21,17 @@
          </where>
        </select>
 
+      <select id="toBeUnfiredTrees" resultType="com.example.forestfires.domain.po.TreesPO">
+          select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
+         crownarea,crownvolume,previousid,tree_location_nz,2 as status from trees
+          where status = 1 and start_fire_time + interval #{start_fire_hour} hour >= trees.end_fire_time
+      </select>
+
+      <update id="updateUnfiredTreesStatus">
+        update trees set status = 2
+        where status = 1 and start_fire_time + interval 40 hour >= trees.end_fire_time
+      </update>
+
       <select id="peekPoint" resultType="hashmap">
         select (min(tree_location_x)+
                max(tree_location_x))/2 as tree_location_x,
@@ -31,11 +42,13 @@
       </select>
 
       <update id="updateTreeStatus">
-        update trees set status = #{status},start_fire_time = now() where treeid=#{treeid}
+        update trees set status = #{status},start_fire_time = now(),
+        end_fire_time = date_add(now(), interval crownvolume/2 hour )
+        where treeid=#{treeid}
       </update>
 
       <update id="clearTreeStatus">
-        update trees set status = 0 and start_fire_time is null
+        update trees set status = 0 and start_fire_time is null and end_fire_time is null
       </update>
 
     </mapper>
