@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import javax.annotation.Resource;
+import org.apache.commons.math3.util.FastMath;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -89,7 +90,7 @@ public class FiresService {
                                 x.getTreeid(),
                                 y.getTreeid(),
                                 realDistince,
-                                (y.getTreeLocationNz() - x.getTreeLocationNz())/realDistince,
+                                FastMath.toDegrees(FastMath.atan2(x.getTreeLocationNz() - y.getTreeLocationNz(), realDistince)),
                                 DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()),
                                 TreeStatusEnum.NOT_FIRE.getStatus())
                         );
