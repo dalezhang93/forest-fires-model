@@ -40,10 +40,10 @@ public interface TreesMapper {
 
     /**
      * 将要灭火的树
-     * @param startFireHour
+     * @param simulatedtime
      * @return
      */
-    List<TreesPO> toBeUnfiredTrees(@Param("start_fire_hour") Integer startFireHour);
+    List<TreesPO> toBeUnfiredTrees(@Param("simulatedtime") String simulatedtime);
 
     /**
      * 更新要灭火的树的状态

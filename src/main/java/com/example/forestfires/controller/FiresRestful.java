@@ -50,8 +50,8 @@ public class FiresRestful {
     @PostMapping("nextFire")
     @ApiOperation("nextFire")
     public ResponseEntity<JsonResult<?>> nextFire(@RequestBody Map<String,String> params) {
-        int startFireHours = Integer.parseInt(params.getOrDefault("startFireHours", "1"));
-        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(startFireHours));
+        String simulatedtime = params.get("simulatedtime");
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(simulatedtime));
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 
