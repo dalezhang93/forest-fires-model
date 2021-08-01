@@ -18,6 +18,7 @@ public class NearByTreesPO {
     private Double slope;
     // 角度
     private Double angle;
-    private Integer nearbytree_status;
+    private Integer nearbytreeStatus;
+    private String nearybyStartFireTime;
 
 }

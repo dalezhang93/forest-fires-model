@@ -1,5 +1,6 @@
 package com.example.forestfires.controller;
 
+import com.example.forestfires.domain.FireCondition;
 import com.example.forestfires.domain.JsonResult;
 import com.example.forestfires.domain.po.TreesPO;
 import com.example.forestfires.service.FiresService;
@@ -49,9 +50,8 @@ public class FiresRestful {
 
     @PostMapping("nextFire")
     @ApiOperation("nextFire")
-    public ResponseEntity<JsonResult<?>> nextFire(@RequestBody Map<String,String> params) {
-        String simulatedtime = params.get("simulatedtime");
-        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(simulatedtime));
+    public ResponseEntity<JsonResult<?>> nextFire(@RequestBody FireCondition fireCondition) {
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(fireCondition));
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 

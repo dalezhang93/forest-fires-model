@@ -1,17 +1,21 @@
 package com.example.forestfires.service;
 
 import com.example.forestfires.algorithm.DistanceCal;
+import com.example.forestfires.algorithm.FireSpeed;
 import com.example.forestfires.dao.mapper.NearbyTreesMapper;
 import com.example.forestfires.dao.mapper.TreesMapper;
+import com.example.forestfires.domain.FireCondition;
 import com.example.forestfires.domain.TreeStatusEnum;
 import com.example.forestfires.domain.po.NearByTreesPO;
 import com.example.forestfires.domain.po.TreesPO;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import javax.annotation.Resource;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.ibatis.session.ExecutorType;
@@ -92,7 +96,8 @@ public class FiresService {
                                 realDistince,
                                 FastMath.toDegrees(FastMath.atan2(x.getTreeLocationNz() - y.getTreeLocationNz(), realDistince)),
                                 DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()),
-                                TreeStatusEnum.NOT_FIRE.getStatus())
+                                TreeStatusEnum.NOT_FIRE.getStatus(),
+                                null)
                         );
                         if (nearByTreesPOList.size() == BATCH_SIZE) {
                             batchinsertNearbyTrees(nearByTreesPOList);
@@ -115,7 +120,7 @@ public class FiresService {
         nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(),  startFireID);
     }
 
-    public List<TreesPO> nextFire(String simulatedtime) {
+    public List<TreesPO> nextFire(FireCondition fireCondition) {
         List<TreesPO> treesPOList = new ArrayList<>();
         List<NearByTreesPO> possibleFireTreeList = nearbyTreesMapper.possibleFireTrees();
 
@@ -128,7 +133,7 @@ public class FiresService {
 
         List<Integer> fireTreeidList = new ArrayList<>();
         for (Integer treeid : treeListMap.keySet()) {
-            if (calPossibleFireTree(treeid, treeListMap.get(treeid))) {
+            if (calPossibleFireTree(treeListMap.get(treeid), fireCondition)) {
                 fireTreeidList.add(treeid);
             }
         }
@@ -138,7 +143,7 @@ public class FiresService {
         }
 
         // 灭火的树列表
-        List<TreesPO> unfiredTrees = treesMapper.toBeUnfiredTrees(simulatedtime);
+        List<TreesPO> unfiredTrees = treesMapper.toBeUnfiredTrees(fireCondition.getSimulatedtime());
         if (!unfiredTrees.isEmpty()) {
             treesPOList.addAll(unfiredTrees);
             treesMapper.updateUnfiredTreesStatus();
@@ -160,9 +165,17 @@ public class FiresService {
         }
     }
 
-    private boolean calPossibleFireTree(int treeid, List<NearByTreesPO> nearbyTreeList) {
-        Random random = new Random();
-        return random.nextBoolean();
+    private boolean calPossibleFireTree(List<NearByTreesPO> nearbyTreeList, FireCondition fireCondition) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm");
+        for (NearByTreesPO nearByTree : nearbyTreeList) {
+            double speed = FireSpeed.calFireSpeed(fireCondition, nearByTree.getAngle(), nearByTree.getSlope());
+            LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), dateTimeFormatter);
+            LocalDateTime nearybyStartFireTime = LocalDateTime.parse(nearByTree.getNearybyStartFireTime(), dateTimeFormatter);
+            if (nearByTree.getDistince()/speed <= Duration.between(nearybyStartFireTime, simulatedTime).getSeconds()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
