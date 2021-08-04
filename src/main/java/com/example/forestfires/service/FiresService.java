@@ -166,7 +166,7 @@ public class FiresService {
     }
 
     private boolean calPossibleFireTree(List<NearByTreesPO> nearbyTreeList, FireCondition fireCondition) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         for (NearByTreesPO nearByTree : nearbyTreeList) {
             double speed = FireSpeed.calFireSpeed(fireCondition, nearByTree.getAngle(), nearByTree.getSlope());
             LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), dateTimeFormatter);
