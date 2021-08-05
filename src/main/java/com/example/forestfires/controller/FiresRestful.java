@@ -57,7 +57,8 @@ public class FiresRestful {
 
     @PostMapping("resetFire")
     @ApiOperation("重置状态")
-    public void startfire() {
-        firesService.resetFireStatus();
+    public ResponseEntity<JsonResult<?>> resetfire() {
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.resetFireStatus());
+        return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 }

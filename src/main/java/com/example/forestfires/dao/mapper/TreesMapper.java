@@ -39,6 +39,13 @@ public interface TreesMapper {
     void clearTreeStatus();
 
     /**
+     * 将要被 reset 的树
+     * @return
+     */
+    List<TreesPO> toResetTrees();
+
+
+    /**
      * 将要灭火的树
      * @param simulatedtime
      * @return

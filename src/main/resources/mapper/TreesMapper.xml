@@ -52,5 +52,12 @@
         where status != 0
       </update>
 
+      <select id="toResetTrees" resultType="com.example.forestfires.domain.po.TreesPO">
+        select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
+         crownarea,crownvolume,previousid,tree_location_nz,0 status
+        from trees
+        where status != 0
+      </select>
+
     </mapper>
 
