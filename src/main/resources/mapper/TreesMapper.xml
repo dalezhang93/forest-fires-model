@@ -49,6 +49,7 @@
 
       <update id="clearTreeStatus">
         update trees set status = 0 and start_fire_time is null and end_fire_time is null
+        where status != 0
       </update>
 
     </mapper>
