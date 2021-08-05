@@ -38,6 +38,8 @@ public class FiresService {
     @Resource
     public SqlSessionFactory sqlSessionFactory;
 
+    private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     private int BATCH_SIZE = 5000;
 
     // 树的最大直径
@@ -166,11 +168,11 @@ public class FiresService {
     }
 
     private boolean calPossibleFireTree(List<NearByTreesPO> nearbyTreeList, FireCondition fireCondition) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         for (NearByTreesPO nearByTree : nearbyTreeList) {
             double speed = FireSpeed.calFireSpeed(fireCondition, nearByTree.getAngle(), nearByTree.getSlope());
-            LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), dateTimeFormatter);
-            LocalDateTime nearybyStartFireTime = LocalDateTime.parse(nearByTree.getNearybyStartFireTime(), dateTimeFormatter);
+            LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), DATE_TIME_FORMATTER);
+            LocalDateTime nearybyStartFireTime = LocalDateTime.parse(nearByTree.getNearybyStartFireTime(), DATE_TIME_FORMATTER);
             if (nearByTree.getDistince()/speed <= Duration.between(nearybyStartFireTime, simulatedTime).getSeconds()) {
                 return true;
             }
