@@ -1,24 +1,23 @@
-## prerun
+## pre
 
 install jdk8
 
 install maven
 
-## run
+## install
 
-git clone https://github.com/dalezhang93/forest-fires-model.git
+`git clone https://github.com/dalezhang93/forest-fires-model.git`
 
 如果 github 访问不了,使用以下代理地址
 
-git clone https://github.com.cnpmjs.org/dalezhang93/forest-fires-model.git
+`git clone https://github.com.cnpmjs.org/dalezhang93/forest-fires-model.git`
 
------
+### run
 
-git checkout master
+切换分支
 
-mvn package
+`git checkout master`
 
-cd target
+运行
 
-nohup java -jar -XX:+UseG1GC -XX:NewRatio=1 forestfires-0.0.1-SNAPSHOT.jar &
-
+`mvn spring-boot:run`
