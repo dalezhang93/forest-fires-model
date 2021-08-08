@@ -11,9 +11,14 @@ spring:
     hikari:
       maximumPoolSize: 3
 
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
       # 下划线转驼峰
     map-underscore-to-camel-case: true
+
+knife4j:
+  enable: true
+  production: false
