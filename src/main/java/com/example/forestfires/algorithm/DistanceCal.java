@@ -11,9 +11,9 @@ import org.apache.commons.math3.util.FastMath;
 public class DistanceCal {
     private static final double R = 6367000.0;
 
-    public enum DistinceEnum {
+    public enum DistanceEnum {
         // 直线距离
-        STRAIGHT_DISTINCE,
+        STRAIGHT_DISTANCE,
         // 角度
         ANGLE
     }
@@ -57,9 +57,9 @@ public class DistanceCal {
         return angle;
     }
 
-    public static Map<DistinceEnum, Double> distanceFull(double lat1, double lng1, double lat2, double lng2) {
+    public static Map<DistanceEnum, Double> distanceFull(double lat1, double lng1, double lat2, double lng2) {
 
-        Map<DistinceEnum, Double> distinceEnumMap = new EnumMap<>(DistinceEnum.class);
+        Map<DistanceEnum, Double> distanceEnumMap = new EnumMap<>(DistanceEnum.class);
         // 经度差值
         double dx = lng1 - lng2;
         // 纬度差值
@@ -69,7 +69,7 @@ public class DistanceCal {
         double lx = FastMath.toRadians(dx) * R * FastMath.cos(FastMath.toRadians(b));
         // 南北距离
         double ly = R * FastMath.toRadians(dy);
-        distinceEnumMap.put(DistinceEnum.STRAIGHT_DISTINCE, FastMath.sqrt(lx * lx + ly * ly));
+        distanceEnumMap.put(DistanceEnum.STRAIGHT_DISTANCE, FastMath.sqrt(lx * lx + ly * ly));
 
         // 角度计算
         double angle;
@@ -84,7 +84,7 @@ public class DistanceCal {
         } else {
             angle = FastMath.toDegrees(FastMath.atan2(ly, lx));
         }
-        distinceEnumMap.put(DistinceEnum.ANGLE, angle);
-        return distinceEnumMap;
+        distanceEnumMap.put(DistanceEnum.ANGLE, angle);
+        return distanceEnumMap;
     }
 }

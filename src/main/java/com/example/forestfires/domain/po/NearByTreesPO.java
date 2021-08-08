@@ -13,7 +13,7 @@ public class NearByTreesPO {
 
     private Integer treeid;
     private Integer nearbytreeid;
-    private Double distince;
+    private Double distance;
     // 坡度
     private Double slope;
     // 角度

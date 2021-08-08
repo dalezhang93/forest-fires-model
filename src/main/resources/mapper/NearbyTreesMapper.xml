@@ -5,7 +5,7 @@
     <mapper namespace="com.example.forestfires.dao.mapper.NearbyTreesMapper">
       <insert id="batchInsertNearbyTrees">
         insert into nearbytrees(treeid,nearbytreeid,distance,angle,slope) values
-        (#{tree.treeid}, #{tree.nearbytreeid},#{tree.distince}, #{tree.angle}, #{tree.slope})
+        (#{tree.treeid}, #{tree.nearbytreeid},#{tree.distance}, #{tree.angle}, #{tree.slope})
       </insert>
 
       <delete id="cleanNearbyTreesTable">

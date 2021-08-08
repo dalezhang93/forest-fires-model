@@ -88,15 +88,15 @@ public class FiresService {
                     ) {
                         continue;
                     }
-                    double realDistince = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
+                    double realDistance = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
                     // 如果实际距离小于两树的树冠距离
-                    if (realDistince < (x.getCrowndiameter()/2 + y.getCrowndiameter()/2 * fireRadiusMultiple)) {
+                    if (realDistance < (x.getCrowndiameter()/2 + y.getCrowndiameter()/2 * fireRadiusMultiple)) {
                         nearByTreesPOList.add(
                             NearByTreesPO.of(
                                 x.getTreeid(),
                                 y.getTreeid(),
-                                realDistince,
-                                FastMath.toDegrees(FastMath.atan2(x.getTreeLocationNz() - y.getTreeLocationNz(), realDistince)),
+                                realDistance,
+                                FastMath.toDegrees(FastMath.atan2(x.getTreeLocationNz() - y.getTreeLocationNz(), realDistance)),
                                 DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()),
                                 TreeStatusEnum.NOT_FIRE.getStatus(),
                                 null)
@@ -173,7 +173,7 @@ public class FiresService {
             double speed = FireSpeed.calFireSpeed(fireCondition, nearByTree.getAngle(), nearByTree.getSlope());
             LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), DATE_TIME_FORMATTER);
             LocalDateTime nearybyStartFireTime = LocalDateTime.parse(nearByTree.getNearybyStartFireTime(), DATE_TIME_FORMATTER);
-            if (nearByTree.getDistince()/speed <= Duration.between(nearybyStartFireTime, simulatedTime).getSeconds()) {
+            if (nearByTree.getDistance()/speed <= Duration.between(nearybyStartFireTime, simulatedTime).getSeconds()) {
                 return true;
             }
         }
