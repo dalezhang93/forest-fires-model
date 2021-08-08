@@ -16,7 +16,6 @@ public class TreesPO {
     private Double crowndiameter ;
     private Double crownarea ;
     private Integer crownvolume ;
-    private Integer previousid ;
     private Integer treeLocationNz;
     @JsonIgnore
     private Double auxiliaryDistance ;

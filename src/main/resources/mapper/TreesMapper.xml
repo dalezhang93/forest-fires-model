@@ -5,13 +5,13 @@
     <mapper namespace="com.example.forestfires.dao.mapper.TreesMapper">
        <select id="alltrees" resultType="com.example.forestfires.domain.po.TreesPO">
          select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
-         crownarea,crownvolume,previousid,tree_location_nz,status
+         crownarea,crownvolume,tree_location_nz,status
          from trees
        </select>
 
        <select id="treesInfo" resultType="com.example.forestfires.domain.po.TreesPO">
          select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
-         crownarea,crownvolume,previousid,tree_location_nz,status
+         crownarea,crownvolume,tree_location_nz,status
          from trees
          <where>
            treeid in
@@ -23,7 +23,7 @@
 
       <select id="toBeUnfiredTrees" resultType="com.example.forestfires.domain.po.TreesPO">
           select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
-         crownarea,crownvolume,previousid,tree_location_nz,2 as status from trees
+         crownarea,crownvolume,tree_location_nz,2 as status from trees
           where status = 1 and end_fire_time >= str_to_date(#{simulatedtime},'%Y-%m-%d %H:%i');
       </select>
 
@@ -54,7 +54,7 @@
 
       <select id="toResetTrees" resultType="com.example.forestfires.domain.po.TreesPO">
         select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
-         crownarea,crownvolume,previousid,tree_location_nz,0 status
+         crownarea,crownvolume,tree_location_nz,0 status
         from trees
         where status != 0
       </select>
