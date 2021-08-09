@@ -82,13 +82,10 @@ public class FiresService {
                 TreesPO y = treesList.get(j);
                 // 如果相对距离小于树的最大直径
                 if (Math.abs(x.getAuxiliaryDistance() - y.getAuxiliaryDistance()) <= MAX_CROWNDIAMETER) {
-                    // 如果海拔差大就不考虑
-                    if ((x.getTreeheight() + x.getTreeLocationNz()) < y.getTreeLocationNz()
-                        || y.getTreeLocationNz() + y.getTreeheight() < x.getTreeLocationNz()
-                    ) {
-                        continue;
-                    }
-                    double realDistance = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
+                    double strightDistance = DistanceCal.distanceSimplify(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY());
+                    double radians = FastMath.atan2(x.getTreeLocationNz() - y.getTreeLocationNz(), strightDistance);
+                    // 考虑高程后的真实距离
+                    double realDistance = strightDistance / FastMath.acos(radians);
                     // 如果实际距离小于两树的树冠距离
                     if (realDistance < (x.getCrowndiameter()/2 + y.getCrowndiameter()/2 * fireRadiusMultiple)) {
                         nearByTreesPOList.add(
@@ -96,7 +93,7 @@ public class FiresService {
                                 x.getTreeid(),
                                 y.getTreeid(),
                                 realDistance,
-                                FastMath.toDegrees(FastMath.atan2(x.getTreeLocationNz() - y.getTreeLocationNz(), realDistance)),
+                                FastMath.toDegrees(radians),
                                 DistanceCal.calAngle(x.getTreeLocationX(), x.getTreeLocationY(), y.getTreeLocationX(), y.getTreeLocationY()),
                                 TreeStatusEnum.NOT_FIRE.getStatus(),
                                 null)
