@@ -24,7 +24,7 @@
       <select id="toBeUnfiredTrees" resultType="com.example.forestfires.domain.po.TreesPO">
           select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
          crownarea,crownvolume,tree_location_nz,2 as status from trees
-          where status = 1 and str_to_date(#{simulatedtime},'%Y-%m-%d %H:%i') >= end_fire_time;
+          where status = 1 and str_to_date(#{simulatedtime},'%Y-%m-%d %H:%i:%s') >= end_fire_time;
       </select>
 
       <update id="updateUnfiredTreesStatus">

@@ -38,7 +38,7 @@ public class FiresService {
     @Resource
     public SqlSessionFactory sqlSessionFactory;
 
-    private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private int BATCH_SIZE = 5000;
 
