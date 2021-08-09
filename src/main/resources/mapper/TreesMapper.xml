@@ -6,7 +6,7 @@
        <select id="alltrees" resultType="com.example.forestfires.domain.po.TreesPO">
          select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
          crownarea,crownvolume,tree_location_nz,status
-         from trees
+         from trees where crowndiameter > 0 and crownarea > 0 and crownvolume > 0
        </select>
 
        <select id="treesInfo" resultType="com.example.forestfires.domain.po.TreesPO">
@@ -38,7 +38,7 @@
                (min(tree_location_y)+
                 max(tree_location_y))/2 as tree_location_y,
                max(crowndiameter) max_crowndiameter
-        from trees
+        from trees where crowndiameter > 0 and crownarea > 0 and crownvolume > 0
       </select>
 
       <update id="updateTreeStatus">
