@@ -24,7 +24,7 @@
       <select id="possibleFireTrees" resultType="com.example.forestfires.domain.po.NearByTreesPO">
           select t.treeid, t.nearbytreeid, t.distance, t.angle, t.slope, t.nearbytree_status, date_format(t.start_fire_time, '%Y-%m-%d %H:%i') as nearybyStartFireTime from
           (select n.*,t.start_fire_time,t.end_fire_time from nearbytrees n inner join trees t
-          on n.nearbytreeid = t.treeid
+          on n.nearbytreeid = t.treeid and n.nearbytree_status = t.status
           where n.nearbytree_status=1) t inner join trees t2
           on t.treeid=t2.treeid
           where t2.status = 0
