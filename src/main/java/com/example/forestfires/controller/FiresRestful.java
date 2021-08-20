@@ -61,4 +61,11 @@ public class FiresRestful {
         JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.resetFireStatus());
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
+
+    @GetMapping("fireline")
+    @ApiOperation("火线")
+    public ResponseEntity<JsonResult<?>> fineLine() {
+        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.getFireLine());
+        return new ResponseEntity<>(jsonResult, HttpStatus.OK);
+    }
 }
