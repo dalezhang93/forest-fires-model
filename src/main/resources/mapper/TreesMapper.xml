@@ -9,6 +9,14 @@
          from trees where crowndiameter > 0 and crownarea > 0 and crownvolume > 0
        </select>
 
+       <select id="allFiredtrees" resultType="com.example.forestfires.domain.po.TreesPO">
+         select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
+         crownarea,crownvolume,tree_location_nz,status
+         from trees where crowndiameter > 0 and crownarea > 0 and crownvolume > 0
+         and status = 1
+         order by tree_location_y
+       </select>
+
        <select id="treesInfo" resultType="com.example.forestfires.domain.po.TreesPO">
          select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
          crownarea,crownvolume,tree_location_nz,status

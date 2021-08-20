@@ -14,10 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.annotation.Resource;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.ibatis.session.ExecutorType;
@@ -42,9 +40,6 @@ public class FiresService {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    // 火线集合
-    private static final Set<Integer> FIRE_LINE_SET = new HashSet<>();
-
     private int BATCH_SIZE = 5000;
 
     // 树的最大直径
@@ -56,8 +51,6 @@ public class FiresService {
 
     @Transactional(rollbackFor = Exception.class)
     public void init(Double fireRadiusMultiple) {
-
-        FIRE_LINE_SET.clear();
 
         List<TreesPO> treesList = treesMapper.alltrees();
 
@@ -122,7 +115,6 @@ public class FiresService {
 
     @Transactional(rollbackFor = Exception.class)
     public void startFire(int startFireID) {
-        FIRE_LINE_SET.add(startFireID);
         treesMapper.updateTreeStatus(TreeStatusEnum.FIRE.getStatus(), startFireID);
         nearbyTreesMapper.updateNearbyTreeStatus(TreeStatusEnum.FIRE.getStatus(),  startFireID);
     }
@@ -179,9 +171,6 @@ public class FiresService {
             LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), DATE_TIME_FORMATTER);
             LocalDateTime nearybyStartFireTime = LocalDateTime.parse(nearByTree.getNearybyStartFireTime(), DATE_TIME_FORMATTER);
             if (nearByTree.getDistance()/speed <= Duration.between(nearybyStartFireTime, simulatedTime).getSeconds()) {
-                // 更新火线
-                FIRE_LINE_SET.add(nearByTree.getTreeid());
-                FIRE_LINE_SET.remove(nearByTree.getNearbytreeid());
                 return true;
             }
         }
@@ -205,14 +194,40 @@ public class FiresService {
 
     @Transactional(rollbackFor = Exception.class)
     public List<TreesPO> resetFireStatus() {
-        FIRE_LINE_SET.clear();
         List<TreesPO> treesPOList = treesMapper.toResetTrees();
         treesMapper.clearTreeStatus();
         nearbyTreesMapper.resetNearbyTreesStatus();
         return treesPOList;
     }
 
+    /**
+     * 火线
+     * @return
+     */
     public List<TreesPO> getFireLine() {
-        return treesMapper.treesInfo(new ArrayList<>(FIRE_LINE_SET));
+        List<TreesPO> fireSet = new ArrayList<>();
+        List<TreesPO> treesList = treesMapper.allFiredtrees();
+
+        // 大概两米的距离
+        double baseYdist = 0.00002;
+        double baseY = treesList.get(0).getTreeLocationY();
+
+        List<TreesPO> tempList = new ArrayList<>();
+        for (int i = 0; i < treesList.size(); i++) {
+            if ((treesList.get(i).getTreeLocationY() - baseY) <= baseYdist) {
+                tempList.add(treesList.get(i));
+            } else {
+                tempList.sort(Comparator.comparing(TreesPO::getTreeLocationX));
+                fireSet.add(tempList.get(0));
+                fireSet.add(tempList.get(tempList.size()-1));
+                tempList.clear();
+                if (i < treesList.size() - 1 ){
+                    baseY = treesList.get(i+1).getTreeLocationY();
+                }
+            }
+        }
+
+        return fireSet;
     }
+
 }

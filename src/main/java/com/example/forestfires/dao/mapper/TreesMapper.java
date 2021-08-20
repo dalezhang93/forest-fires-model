@@ -18,6 +18,12 @@ public interface TreesMapper {
     List<TreesPO> alltrees();
 
     /**
+     * 所有着火的 Trees
+     * @return
+     */
+    List<TreesPO> allFiredtrees();
+
+    /**
      *
      * @return
      */
