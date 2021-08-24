@@ -205,29 +205,7 @@ public class FiresService {
      * @return
      */
     public List<TreesPO> getFireLine() {
-        List<TreesPO> fireSet = new ArrayList<>();
-        List<TreesPO> treesList = treesMapper.allFiredtrees();
-
-        // 大概两米的距离
-        double baseYdist = 0.00002;
-        double baseY = treesList.get(0).getTreeLocationY();
-
-        List<TreesPO> tempList = new ArrayList<>();
-        for (int i = 0; i < treesList.size(); i++) {
-            if ((treesList.get(i).getTreeLocationY() - baseY) <= baseYdist) {
-                tempList.add(treesList.get(i));
-            } else {
-                tempList.sort(Comparator.comparing(TreesPO::getTreeLocationX));
-                fireSet.add(tempList.get(0));
-                fireSet.add(tempList.get(tempList.size()-1));
-                tempList.clear();
-                if (i < treesList.size() - 1 ){
-                    baseY = treesList.get(i+1).getTreeLocationY();
-                }
-            }
-        }
-
-        return fireSet;
+        return treesMapper.firelineList();
     }
 
 }

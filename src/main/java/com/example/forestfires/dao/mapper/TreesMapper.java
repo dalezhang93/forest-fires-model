@@ -18,12 +18,6 @@ public interface TreesMapper {
     List<TreesPO> alltrees();
 
     /**
-     * 所有着火的 Trees
-     * @return
-     */
-    List<TreesPO> allFiredtrees();
-
-    /**
      *
      * @return
      */
@@ -62,5 +56,11 @@ public interface TreesMapper {
      * 更新要灭火的树的状态
      */
     void updateUnfiredTreesStatus();
+
+    /**
+     * 火线列表
+     * @return
+     */
+    List<TreesPO> firelineList();
 
 }

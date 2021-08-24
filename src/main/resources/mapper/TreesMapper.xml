@@ -9,12 +9,11 @@
          from trees where crowndiameter > 0 and crownarea > 0 and crownvolume > 0
        </select>
 
-       <select id="allFiredtrees" resultType="com.example.forestfires.domain.po.TreesPO">
-         select treeid,tree_location_x,tree_location_y,treeheight,crowndiameter,
-         crownarea,crownvolume,tree_location_nz,status
-         from trees where crowndiameter > 0 and crownarea > 0 and crownvolume > 0
-         and status = 1
-         order by tree_location_y
+       <select id="firelineList" resultType="com.example.forestfires.domain.po.TreesPO">
+         select distinct t.*
+            from trees t inner join nearbytrees n
+            on t.treeid = n.treeid
+         where status = 1 and nearbytree_status =0
        </select>
 
        <select id="treesInfo" resultType="com.example.forestfires.domain.po.TreesPO">
