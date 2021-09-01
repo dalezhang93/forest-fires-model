@@ -193,11 +193,9 @@ public class FiresService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public List<TreesPO> resetFireStatus() {
-        List<TreesPO> treesPOList = treesMapper.toResetTrees();
+    public void resetFireStatus() {
         treesMapper.clearTreeStatus();
         nearbyTreesMapper.resetNearbyTreesStatus();
-        return treesPOList;
     }
 
     /**

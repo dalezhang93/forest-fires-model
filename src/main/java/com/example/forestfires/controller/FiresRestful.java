@@ -51,15 +51,15 @@ public class FiresRestful {
     @PostMapping("nextFire")
     @ApiOperation("nextFire")
     public ResponseEntity<JsonResult<?>> nextFire(@RequestBody FireCondition fireCondition) {
+        System.out.println(fireCondition);
         JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(fireCondition));
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
 
     @PostMapping("resetFire")
     @ApiOperation("重置状态")
-    public ResponseEntity<JsonResult<?>> resetfire() {
-        JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.resetFireStatus());
-        return new ResponseEntity<>(jsonResult, HttpStatus.OK);
+    public void resetfire() {
+        firesService.resetFireStatus();
     }
 
     @GetMapping("fireline")
