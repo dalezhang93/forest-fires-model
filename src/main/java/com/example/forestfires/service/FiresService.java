@@ -142,11 +142,11 @@ public class FiresService {
         }
 
         // 灭火的树列表
-        List<TreesPO> unfiredTrees = treesMapper.toBeUnfiredTrees(fireCondition.getSimulatedtime());
-        if (!unfiredTrees.isEmpty()) {
-            treesPOList.addAll(unfiredTrees);
-            treesMapper.updateUnfiredTreesStatus();
-        }
+//        List<TreesPO> unfiredTrees = treesMapper.toBeUnfiredTrees(fireCondition.getSimulatedtime());
+//        if (!unfiredTrees.isEmpty()) {
+//            treesPOList.addAll(unfiredTrees);
+//            treesMapper.updateUnfiredTreesStatus();
+//        }
 
         return treesPOList;
     }

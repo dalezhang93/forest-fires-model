@@ -51,7 +51,6 @@ public class FiresRestful {
     @PostMapping("nextFire")
     @ApiOperation("nextFire")
     public ResponseEntity<JsonResult<?>> nextFire(@RequestBody FireCondition fireCondition) {
-        System.out.println(fireCondition);
         JsonResult<List<TreesPO>> jsonResult = new JsonResult<>(firesService.nextFire(fireCondition));
         return new ResponseEntity<>(jsonResult, HttpStatus.OK);
     }
