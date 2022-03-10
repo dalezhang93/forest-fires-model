@@ -15,5 +15,6 @@ steps:
     script: |
       currentlastcommit =`git log --format="%H" -n 1`
       echo $currentlastcommit
+      echo $(LASTCOMMIT)
       curl www.baidu.com
 
