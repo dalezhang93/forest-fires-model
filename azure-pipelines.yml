@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: mymac
 
 steps:
 - task: CmdLine@2
@@ -15,6 +15,8 @@ steps:
     script: |
       currentlastcommit =`git log --format="%H" -n 1`
       echo $currentlastcommit
-      echo $(LASTCOMMIT)
+      echo $(aVarFromYaml)
       curl www.baidu.com
+      env:
+        aVarFromYaml: someValue
 
