@@ -10,23 +10,10 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sqMavenPluginVersionChoice: 'latest'
-    mavenOptions: '-Xmx3072m'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
 - task: CmdLine@2
   inputs:
     script: |
-      echo Write your commands here
-      
-      echo Hello world
+      currentlastcommit =`git log --format="%H" -n 1`
+      echo $currentlastcommit
+      curl www.baidu.com
+
