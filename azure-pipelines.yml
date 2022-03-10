@@ -13,9 +13,6 @@ steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
     publishJUnitResults: false
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
@@ -27,3 +24,9 @@ steps:
     jdkArchitectureOption: 'x64'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo Hello world
