@@ -21,7 +21,6 @@ steps:
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
     mavenOptions: '-Xmx3072m'
     jdkVersionOption: '1.8'
