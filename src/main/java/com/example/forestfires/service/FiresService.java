@@ -1,7 +1,6 @@
 package com.example.forestfires.service;
 
 import com.example.forestfires.algorithm.DistanceCal;
-import com.example.forestfires.algorithm.FireSpeed;
 import com.example.forestfires.dao.mapper.NearbyTreesMapper;
 import com.example.forestfires.dao.mapper.TreesMapper;
 import com.example.forestfires.domain.FireCondition;
@@ -167,7 +166,8 @@ public class FiresService {
     private boolean calPossibleFireTree(List<NearByTreesPO> nearbyTreeList, FireCondition fireCondition) {
 
         for (NearByTreesPO nearByTree : nearbyTreeList) {
-            double speed = FireSpeed.calFireSpeed(fireCondition, nearByTree.getAngle(), nearByTree.getSlope());
+            double speed = fireCondition.getSpeed();
+            // FireSpeed.calFireSpeed(fireCondition, nearByTree.getAngle(), nearByTree.getSlope());
             LocalDateTime simulatedTime = LocalDateTime.parse(fireCondition.getSimulatedtime(), DATE_TIME_FORMATTER);
             LocalDateTime nearybyStartFireTime = LocalDateTime.parse(nearByTree.getNearybyStartFireTime(), DATE_TIME_FORMATTER);
             if (nearByTree.getDistance()/speed <= Duration.between(nearybyStartFireTime, simulatedTime).getSeconds()) {

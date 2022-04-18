@@ -20,4 +20,5 @@ public class FireCondition {
     private Double c;
     // 风向角度
     private Double windAngle;
+    private Double speed;
 }
