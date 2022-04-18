@@ -12,11 +12,6 @@ public class FireSpeed {
 
     /**
      * 速度计算 R0 = aT + bW － c
-     * @param t
-     * @param w
-     * @param a
-     * @param b
-     * @param c
      * @param angle 坐标角度
      * @param slope 坡度
      * @return
@@ -76,7 +71,7 @@ public class FireSpeed {
         }
 
 
-        return speed * angleFactor * slopeFactor;
+        return (speed * angleFactor * slopeFactor) / 60;
     }
 
 }
