@@ -15,8 +15,6 @@ steps:
     script: |
       currentlastcommit =`git log --format="%H" -n 1`
       echo $currentlastcommit
-      echo $(aVarFromYaml)
       curl www.baidu.com
-      env:
-        aVarFromYaml: someValue
+
 
