@@ -12,8 +12,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      currentlastcommit =`git log --format="%H" -n 1`
+      currentlastcommit=`git log --format="%H" -n 1`
       echo $currentlastcommit
-      curl www.baidu.com
 
 
