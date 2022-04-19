@@ -6,8 +6,7 @@
 trigger:
 - master
 
-pool:
-  vmImage: tencent
+pool: 'tencent'
 
 steps:
 - task: CmdLine@2
